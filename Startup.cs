@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Auth_TaskMaster.Repositories;
+using Auth_TaskMaster.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,8 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
-using Repositories;
-using Services;
 
 namespace Auth_TaskMaster
 {
@@ -72,6 +72,10 @@ namespace Auth_TaskMaster
 
          services.AddTransient<ProfilesService>();
          services.AddTransient<ProfilesRepository>();
+         services.AddTransient<BoardsService>();
+         services.AddTransient<BoardsRepository>();
+         services.AddTransient<TodosService>();
+         services.AddTransient<TodosRepository>();
       }
 
       private IDbConnection CreateDbConnection()

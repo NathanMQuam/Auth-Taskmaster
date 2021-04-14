@@ -40,6 +40,7 @@ namespace Auth_TaskMaster.Services
 
          data.Name = updated.Name != null ? updated.Name : data.Name;
          data.Description = updated.Description != null ? updated.Description : data.Description;
+         data.OpenToPublicView = updated.OpenToPublicView;
 
          return _repo.Edit(data);
       }

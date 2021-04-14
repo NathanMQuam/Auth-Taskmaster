@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Models;
 
-namespace Repositories
+namespace Auth_TaskMaster.Repositories
 {
    public class ProfilesRepository
    {

@@ -4,7 +4,7 @@ using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Services;
+using Auth_TaskMaster.Services;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,37 +35,6 @@ namespace Controllers
             //MAKE SURE TO BRING IN codeworks.auth0provider
             Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
             return Ok(_pservice.GetOrCreateProfile(userInfo));
-         }
-         catch (Exception e)
-         {
-            return BadRequest(e.Message);
-         }
-      }
-
-      // [HttpGet("blogs")]
-      // public async Task<ActionResult<IEnumerator<Blog>>> GetBlogs()
-      // {
-      //    try
-      //    {
-      //       Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-      //       return Ok(_bs.GetBlogsByProfileId(userInfo.Id));
-      //    }
-      //    catch (Exception e)
-      //    {
-      //       return BadRequest(e.Message);
-      //    }
-      // }
-
-      [HttpPut]
-      [Authorize]
-      public async Task<ActionResult<Profile>> EditAsync([FromBody] Profile editData)
-      {
-         try
-         {
-            Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-            editData.Id = userInfo.Id;
-            Profile editedProfile = _pservice.Edit(editData);
-            return Ok(editedProfile);
          }
          catch (Exception e)
          {

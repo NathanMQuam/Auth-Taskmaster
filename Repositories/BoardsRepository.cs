@@ -16,23 +16,23 @@ namespace Auth_TaskMaster.Repositories
 
       internal IEnumerable<Board> GetAll()
       {
-         string sql = "SELECT * FROM defaultinfo;";
+         string sql = "SELECT * FROM boards;";
          return _db.Query<Board>(sql);
       }
 
       internal Board GetById(int id)
       {
-         string sql = "SELECT * FROM defaultinfo WHERE id = @id;";
+         string sql = "SELECT * FROM boards WHERE id = @id;";
          return _db.QueryFirstOrDefault<Board>(sql, new { id });
       }
 
       internal Board Create(Board newBoard)
       {
          string sql = @"
-         INSERT INTO defaultinfo
-         (name, description, boardId, creatorId)
+         INSERT INTO boards
+         (name, description, creatorId, openToPublicView)
          VALUES
-         (@name, @amount, @boardId, @creatorId);";
+         (@name, @description, @creatorId, @openToPublicView);";
          int id = _db.ExecuteScalar<int>(sql, newBoard);
          newBoard.Id = id;
          return newBoard;
@@ -41,19 +41,20 @@ namespace Auth_TaskMaster.Repositories
       internal Board Edit(Board data)
       {
          string sql = @"
-         UPDATE defaultinfo
+         UPDATE boards
          SET
             name = @name,
-            amount = @amount,
+            description = @description,
+            openToPublicView = @openToPublicView
          WHERE id = @id;
-         SELECT * FROM defaultinfo WHERE id = @id;";
+         SELECT * FROM boards WHERE id = @id;";
          Board returnBoard = _db.QueryFirstOrDefault<Board>(sql, data);
          return returnBoard;
       }
 
       internal void Delete(int id)
       {
-         string sql = "DELETE FROM defaultinfo WHERE Id = @id LIMIT 1";
+         string sql = "DELETE FROM boards WHERE Id = @id LIMIT 1";
          _db.Execute(sql, new { id });
       }
    }

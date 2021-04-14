@@ -1,23 +1,34 @@
 using System;
 using Models;
+using Auth_TaskMaster.Repositories;
 
-namespace Services
+namespace Auth_TaskMaster.Services
 {
    public class ProfilesService
    {
-      internal object GetOrCreateProfile(Profile userInfo)
+      private readonly ProfilesRepository _repo;
+      public ProfilesService(ProfilesRepository repo)
       {
-         throw new NotImplementedException();
+         _repo = repo;
+      }
+      internal Profile GetOrCreateProfile(Profile userInfo)
+      {
+         Profile profile = _repo.GetById(userInfo.Id);
+         if (profile == null)
+         {
+            return _repo.Create(userInfo);
+         }
+         return profile;
       }
 
-      internal Profile Edit(Profile editData)
+      internal Profile GetProfileById(string id)
       {
-         throw new NotImplementedException();
-      }
-
-      internal object GetProfileById(string id)
-      {
-         throw new NotImplementedException();
+         Profile profile = _repo.GetById(id);
+         if (profile == null)
+         {
+            throw new Exception("Invalid Id");
+         }
+         return profile;
       }
    }
 }
