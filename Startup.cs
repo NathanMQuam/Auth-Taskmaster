@@ -40,7 +40,6 @@ namespace Auth_TaskMaster
 
 
 
-         // REVIEW: #REGION
          // REVIEW[epic=Authentication] creates functionality for authentication
          services.AddAuthentication(options =>
            {
@@ -73,16 +72,13 @@ namespace Auth_TaskMaster
 
          services.AddTransient<ProfilesService>();
          services.AddTransient<ProfilesRepository>();
-         // REVIEW: #ENDREGION
       }
 
-      // REVIEW: #REGION
       private IDbConnection CreateDbConnection()
       {
          string connectionString = Configuration["db:gearhost"];
          return new MySqlConnection(connectionString);
       }
-      // REVIEW: #ENDREGION
 
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
       public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -92,18 +88,14 @@ namespace Auth_TaskMaster
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "auth_template v1"));
-            // REVIEW: #REGION
             app.UseCors("CorsDevPolicy");
-            // REVIEW: #ENDREGION
          }
 
          app.UseHttpsRedirection();
 
          app.UseRouting();
 
-         // REVIEW: #REGION
          app.UseAuthentication();
-         // REVIEW: #ENDREGION
 
          app.UseAuthorization();
 
